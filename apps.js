@@ -1,12 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
     const searchBtn = document.getElementById('search-btn');
-    const resultDiv = document.getElementById('results');
+    const searchInput = document.getElementById('search-input');
+    const resultsDiv = document.getElementById('results');
 
     searchBtn.addEventListener('click', function() {
-        fetch ('superheroes.php')
+        const query = searchInput.value.trim();
+        const sanitizedQuery = encodeURIComponent(query);
+
+        fetch (`superheroes.php?query=${sanitizedQuery}`)
         .then(response => response.text())
         .then(data => {
-            resultDiv.innerHTML = data;
+            resultsDiv.innerHTML = data;
         })
         .catch(error => {
             console.error('Error fetching superheroes:', error);
